@@ -30,10 +30,10 @@ void range(std::vector<int> array, std::size_t size)
   }
 }
 
-int main()
-{
-  std::vector<int> test_array = {1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16, 17};
-  auto size = test_array.size();
-  range(test_array, size);
-  return 0;
-}
+// int main()
+// {
+  // std::vector<int> test_array = {1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16, 17};
+  // auto size = test_array.size();
+  // range(test_array, size);
+  // return 0;
+// }
