@@ -16,7 +16,7 @@ jobs:
         sudo apt-get install -y gcovr
 
     - name: build
-      run: g++ -Wall -Wextra -o tdd *.cpp
+      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o tdd *.cpp
       
     - name: run
       run: ./tdd
