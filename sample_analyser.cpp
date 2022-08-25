@@ -6,8 +6,7 @@ void generateRangeAndPrintOutput(std::vector<int> input_sample)
   uint8_t i;
   int count = 0;
   std::vector<int> range;
-  std::cout << "|   RANGE   |   READINGS   |" << std::endl;
-  std::cout << "----------------------------------------" << std::endl;
+  printOutput(range, count, header);
 
   if (!input_sample.empty())
   {
@@ -26,13 +25,13 @@ void generateRangeAndPrintOutput(std::vector<int> input_sample)
       }
       else
       {
-        printOutput(range, count);
+        printOutput(range, count, rangeReader);
         range.clear();
         count = 0;
       }
     }
 
-    std::cout << "----------------------------------------" << std::endl;
+    printOutput(range, count, footer);
   }
   else
   {
@@ -40,8 +39,20 @@ void generateRangeAndPrintOutput(std::vector<int> input_sample)
   }
 }
 
-void printOutput(std::vector<int> range, int count)
+void printOutput(std::vector<int> range, int count, int print_expression)
 {
-  std::cout << "|   " << *min_element(range.begin(), range.end()) << "-" << *max_element(range.begin(), range.end()) << ","
-            << "\t " << count + 1 << std::endl;
+  switch (print_expression)
+  {
+  case header: // Prints Header
+    std::cout << "|   RANGE   |   READINGS   |" << std::endl;
+    std::cout << "----------------------------------------" << std::endl;
+    break;
+  case footer: // Prints Footer
+    std::cout << "----------------------------------------" << std::endl;
+    break;
+  case rangeReader: // Prints Range, Readings Output
+    std::cout << "|   " << *min_element(range.begin(), range.end()) << "-" << *max_element(range.begin(), range.end()) << ","
+              << "\t " << count + 1 << std::endl;
+    break;
+  }
 }
