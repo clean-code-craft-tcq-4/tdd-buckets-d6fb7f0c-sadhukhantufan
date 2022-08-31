@@ -1,7 +1,7 @@
 #include "sample_analyser.h"
 using namespace std;
 
-void generateRangeAndPrintOutput(std::vector<int> input_sample)
+void generateRange(std::vector<int> input_sample)
 {
   uint8_t i;
   int count = 0;
