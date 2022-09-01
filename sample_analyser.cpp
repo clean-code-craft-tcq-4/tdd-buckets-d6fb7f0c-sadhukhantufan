@@ -1,11 +1,12 @@
 #include "sample_analyser.h"
 using namespace std;
 
-void generateRange(std::vector<int> input_sample)
+std::vector<std::string> generateRange(std::vector<int> input_sample, std::vector<std::string> rangeList)
 {
   uint8_t i;
   int count = 0;
   std::vector<int> range;
+  // std::vector<string> rangeList;
   printOutput(range, count, header);
 
   if (!input_sample.empty())
@@ -25,7 +26,11 @@ void generateRange(std::vector<int> input_sample)
       }
       else
       {
+        rangeLimit m_obj;
         printOutput(range, count, rangeReader);
+        auto boundaryValue = findMaxMin(range, m_obj);
+        string dataElement = "[" + to_string(boundaryValue.min) + "-" + to_string(boundaryValue.max) + "] , " + to_string(count + 1);
+        rangeList.push_back(dataElement);
         range.clear();
         count = 0;
       }
@@ -35,12 +40,24 @@ void generateRange(std::vector<int> input_sample)
   }
   else
   {
-    std::cout << "Empty Input !!!" << std::endl;
+    std::string no_output = "Empty Input";
+    std::cout << no_output << std::endl;
+    rangeList.push_back("Empty Input");
   }
+  return rangeList;
+}
+
+rangeLimit findMaxMin(std::vector<int> range, rangeLimit boundary)
+{
+  boundary.max = *max_element(range.begin(), range.end());
+  boundary.min = *min_element(range.begin(), range.end());
+
+  return boundary;
 }
 
 void printOutput(std::vector<int> range, int count, int print_expression)
 {
+  rangeLimit l_obj;
   switch (print_expression)
   {
   case header: // Prints Header
@@ -51,7 +68,8 @@ void printOutput(std::vector<int> range, int count, int print_expression)
     std::cout << "----------------------------------------" << std::endl;
     break;
   case rangeReader: // Prints Range, Readings Output
-    std::cout << "|   " << *min_element(range.begin(), range.end()) << "-" << *max_element(range.begin(), range.end()) << ","
+    auto boundaryValue = findMaxMin(range, l_obj);
+    std::cout << "|   " << boundaryValue.min << "-" << boundaryValue.max << ","
               << "\t " << count + 1 << std::endl;
     break;
   }

@@ -6,15 +6,50 @@
 #include "charge_discharge_current_sensor.h"
 using namespace std;
 
-// Start: Test Current Ranges
-TEST_CASE("Analysing Multiple Samples")
+std::vector<std::string> checkRange(std::vector<int> input_sample)
 {
-  generateRange({4, 5});
-  generateRange({4, 5, 10});
-  generateRange({1, 4, 6, 7, 8, 10});
-  generateRange({1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16, 17});
-  generateRange({});
+  std::vector<string> rangeList;
+  auto result = generateRange(input_sample, rangeList);
+  return result;
 }
+
+// Start: Test Current Ranges
+TEST_CASE("Test Sample 1")
+{
+  auto result_to_check = checkRange({4, 5});
+  REQUIRE(result_to_check[0] == "[4-5] , 2");
+}
+
+TEST_CASE("Test Sample 2")
+{
+  auto result_to_check = checkRange({4, 5, 10});
+  REQUIRE(result_to_check[0] == "[4-5] , 2");
+  REQUIRE(result_to_check[1] == "[10-10] , 1");
+}
+
+TEST_CASE("Test Sample 3")
+{
+  auto result_to_check = checkRange({1, 4, 6, 7, 8, 10});
+  REQUIRE(result_to_check[0] == "[1-1] , 1");
+  REQUIRE(result_to_check[1] == "[4-4] , 1");
+  REQUIRE(result_to_check[2] == "[6-8] , 3");
+  REQUIRE(result_to_check[3] == "[10-10] , 1");
+}
+
+TEST_CASE("Test Sample 4")
+{
+  auto result_to_check = checkRange({1, 2, 3, 4, 5, 7, 8, 9, 13, 14, 15, 16, 17});
+  REQUIRE(result_to_check[0] == "[1-5] , 5");
+  REQUIRE(result_to_check[1] == "[7-9] , 3");
+  REQUIRE(result_to_check[2] == "[13-17] , 5");
+}
+
+TEST_CASE("Test Sample 5")
+{
+  auto result_to_check = checkRange({});
+  REQUIRE(result_to_check[0] == "Empty Input");
+}
+
 // End: Test Current Ranges
 
 // Start : Test high_fidelity_current_sensor
